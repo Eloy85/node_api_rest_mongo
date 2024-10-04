@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-const bookSchema = new mongoose.Schema(
+const bookSchema = mongoose.Schema(
     {
         title: String,
         author: String,
@@ -8,5 +8,4 @@ const bookSchema = new mongoose.Schema(
         publication_date: String
     }
 )
-
-module.exports = mongoose.model('Book', bookSchema)
+export default bookSchema

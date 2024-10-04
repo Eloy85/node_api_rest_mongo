@@ -1,7 +1,10 @@
-const express = require('express')
-const router = express.Router()
-const Book = require('../models/book.model')
+import express from 'express'
+import bookSchema from '../models/book.model.js'
+import mongoose from 'mongoose'
 
+const Book = mongoose.model('Book', bookSchema)
+
+const router = express.Router()
 // MIDDLEWARE
 const getBook = async (req, res, next) => {
     let book;
@@ -29,7 +32,6 @@ const getBook = async (req, res, next) => {
 router.get('/', async (req, res) => {
     try {
         const books = await Book.find()
-        console.log('GET ALL', books)
         if (books.length === 0) {
             return res.status(204).json([])
         }
@@ -57,7 +59,6 @@ router.post('/', async (req, res) => {
 
     try {
         const newBook = await book.save()
-        console.log(newBook)
         res.status(201).json(newBook)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -115,4 +116,4 @@ router.delete('/:id', getBook, async (req, res) => {
     }
 })
 
-module.exports = router
+export default router
